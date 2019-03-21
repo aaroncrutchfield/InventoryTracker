@@ -1,0 +1,97 @@
+package com.acrutchfield.inventorytracker.data;
+
+import java.util.List;
+
+public class MetaData {
+    private List<String> customers;
+    private String defaultLocation;
+    private int inventoryTotal;
+    private String itemNumber;
+    private String revLevel;
+    private String standardContainer;
+    private int standardPack;
+    private String suffix;
+
+    public MetaData(List<String> customers, String defaultLocation, int inventoryTotal, String itemNumber, String revLevel, String standardContainer, int standardPack, String suffix) {
+        this.customers = customers;
+        this.defaultLocation = defaultLocation;
+        this.inventoryTotal = inventoryTotal;
+        this.itemNumber = itemNumber;
+        this.revLevel = revLevel;
+        this.standardContainer = standardContainer;
+        this.standardPack = standardPack;
+        this.suffix = suffix;
+    }
+
+    public MetaData() {
+
+    }
+
+    public String getCompleteItemNumber() {
+        return itemNumber + "-" + revLevel + "-" + suffix;
+    }
+
+    public List<String> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<String> customers) {
+        this.customers = customers;
+    }
+
+    public String getDefaultLocation() {
+        return defaultLocation;
+    }
+
+    public void setDefaultLocation(String defaultLocation) {
+        this.defaultLocation = defaultLocation;
+    }
+
+    public int getInventoryTotal() {
+        return inventoryTotal;
+    }
+
+    public void setInventoryTotal(int inventoryTotal) {
+        this.inventoryTotal = inventoryTotal;
+    }
+
+    public String getItemNumber() {
+        return itemNumber;
+    }
+
+    public void setItemNumber(String itemNumber) {
+        this.itemNumber = itemNumber;
+    }
+
+    public String getRevLevel() {
+        return revLevel;
+    }
+
+    public void setRevLevel(String revLevel) {
+        this.revLevel = revLevel;
+    }
+
+    public String getStandardContainer() {
+        return standardContainer;
+    }
+
+    public void setStandardContainer(String standardContainer) {
+        this.standardContainer = standardContainer;
+    }
+
+    public int getStandardPack() {
+        return standardPack;
+    }
+
+    public void setStandardPack(int standardPack) {
+        this.standardPack = standardPack;
+    }
+
+    public String getSuffix() {
+        return suffix;
+    }
+
+    public void setSuffix(String suffix) {
+        this.suffix = suffix;
+    }
+}
