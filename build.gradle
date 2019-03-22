@@ -19,7 +19,8 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+        // Needed for SearchBar app dependency
+        maven { url "https://jitpack.io" }
     }
 }
 
