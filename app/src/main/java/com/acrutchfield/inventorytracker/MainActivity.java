@@ -1,16 +1,20 @@
 package com.acrutchfield.inventorytracker;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.acrutchfield.inventorytracker.data.MetaData;
+import com.acrutchfield.inventorytracker.ui.DialogAddInventory;
 import com.acrutchfield.inventorytracker.ui.MetaDataAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApiNotAvailableException;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView rvTotalInventory;
     private MetaDataAdapter adapter;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         rvTotalInventory = findViewById(R.id.rv_total_inventory);
+        fab = findViewById(R.id.floatingActionButton);
 
         Query query = FirebaseFirestore.getInstance()
                 .collection("META_DATA")
@@ -39,6 +45,18 @@ public class MainActivity extends AppCompatActivity {
         rvTotalInventory.setLayoutManager(new LinearLayoutManager(this));
         rvTotalInventory.setAdapter(adapter);
 
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addItems();
+            }
+        });
+    }
+
+    private void addItems() {
+        // Create a Dialog prompting for data
+        DialogFragment dialogAddInventory = new DialogAddInventory();
+        dialogAddInventory.show(getSupportFragmentManager(), "add_inventory");
     }
 
     @Override
