@@ -28,7 +28,22 @@ public class MetaData {
     }
 
     public String getCompleteItemNumber() {
-        return itemNumber + "-" + revLevel + "-" + suffix;
+        if (revLevel != null && suffix != null) {
+            return itemNumber + "-" + revLevel + "-" + suffix;
+        } else {
+            return itemNumber;
+        }
+    }
+
+    public void setItemProperties(String completeItemNumber) {
+        if (completeItemNumber.contains("-")) {
+            String[] properties = completeItemNumber.split("-");
+            itemNumber = properties[0];
+            revLevel = properties[1];
+            suffix = properties[2];
+        } else {
+            itemNumber = completeItemNumber;
+        }
     }
 
     public List<String> getCustomers() {
@@ -93,5 +108,10 @@ public class MetaData {
 
     public void setSuffix(String suffix) {
         this.suffix = suffix;
+    }
+
+    public int getUpdatedTotal(int quantitiyToAdd) {
+        inventoryTotal += quantitiyToAdd;
+        return inventoryTotal;
     }
 }

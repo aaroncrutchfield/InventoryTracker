@@ -48,7 +48,8 @@ public class InventoryEntry {
         this.total = total;
     }
 
-    public int calculateTotal(int containers, int packQuantity) {
-        return containers * packQuantity;
+    public int getUpdatedTotal(int quantityToAdd) {
+        total += quantityToAdd;
+        return total;
     }
 }

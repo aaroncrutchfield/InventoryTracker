@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/et_containers"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:ems="10"
@@ -64,7 +64,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/et_quantity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:ems="10"
