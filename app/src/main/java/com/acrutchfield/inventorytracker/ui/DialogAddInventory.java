@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.acrutchfield.inventorytracker.R;
@@ -55,23 +56,35 @@ public class DialogAddInventory extends DialogFragment {
                         DialogAddInventory.this.getDialog().dismiss();
                     }
                 })
-                .setNeutralButton("Next", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Add item to database
-                        addItemToDatabase();
-
-                        //Clear Part number, containers, and quantity
-                        clearFields();
-                    }
-                })
+                .setNeutralButton("Next", null)
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         DialogAddInventory.this.getDialog().cancel();
                     }
                 });
-        return builder.create();
+
+        final AlertDialog dialog = builder.create();
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEUTRAL);
+                button.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        // Add item to database
+                        addItemToDatabase();
+
+                        //Clear Part number, containers, and quantity
+                        clearFields();
+                    }
+                });
+            }
+        });
+
+        return dialog;
     }
 
     private void clearFields() {
