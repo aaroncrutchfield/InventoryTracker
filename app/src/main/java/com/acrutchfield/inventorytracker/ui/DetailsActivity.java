@@ -2,6 +2,7 @@ package com.acrutchfield.inventorytracker.ui;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,9 +29,12 @@ public class DetailsActivity extends AppCompatActivity {
         Intent detailsIntent = getIntent();
         String itemNumber = detailsIntent.getStringExtra(ITEM_NUMBER);
 
-        // Set title on ActionBar to itemNumber
+        Toolbar toolbar = findViewById(R.id.toolbar_inventory_details);
+        setSupportActionBar(toolbar);
+
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(itemNumber);
 
         RecyclerView rvItemDetails = findViewById(R.id.rv_item_details);
