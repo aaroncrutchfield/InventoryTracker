@@ -1,19 +1,19 @@
 package com.acrutchfield.inventorytracker.data;
 
-public class InventoryEntry {
+public class Inventory {
     private String item;
     private String location;
     private String spot;
     private int total;
 
-    public InventoryEntry(String item, String location, String spot, int total) {
+    public Inventory(String item, String location, String spot, int total) {
         this.item = item;
         this.location = location;
         this.spot = spot;
         this.total = total;
     }
 
-    public InventoryEntry() {
+    public Inventory() {
     }
 
     public String getItem() {

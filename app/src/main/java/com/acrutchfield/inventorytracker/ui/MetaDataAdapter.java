@@ -14,14 +14,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MetaDataAdapter extends FirestoreRecyclerAdapter<MetaData, MetaDataAdapter.MetaDataViewHolder> {
+
+
+    private final MetaDataInteractionListener lister;
+
+    public interface MetaDataInteractionListener {
+        void onMetaDataInteraction(String itemNumber);
+    }
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.
      *
      * @param options
      */
-    public MetaDataAdapter(@NonNull FirestoreRecyclerOptions options) {
+    public MetaDataAdapter(@NonNull FirestoreRecyclerOptions options, MetaDataInteractionListener lister) {
         super(options);
+        this.lister = lister;
     }
 
     @Override
@@ -44,16 +52,24 @@ public class MetaDataAdapter extends FirestoreRecyclerAdapter<MetaData, MetaData
         private TextView tvItemNumber;
         private TextView tvTotalInventory;
 
-        public MetaDataViewHolder(@NonNull View itemView) {
+        MetaDataViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvItemNumber = itemView.findViewById(R.id.tv_item_number);
             tvTotalInventory = itemView.findViewById(R.id.tv_total_inventory);
         }
 
-        public void bind(MetaData metaData) {
-            tvItemNumber.setText(metaData.getCompleteItemNumber());
+        void bind(MetaData metaData) {
+            final String completeItemNumber = metaData.getCompleteItemNumber();
+
+            tvItemNumber.setText(completeItemNumber);
             tvTotalInventory.setText(String.valueOf(metaData.getInventoryTotal()));
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    lister.onMetaDataInteraction(completeItemNumber);
+                }
+            });
         }
     }
 }

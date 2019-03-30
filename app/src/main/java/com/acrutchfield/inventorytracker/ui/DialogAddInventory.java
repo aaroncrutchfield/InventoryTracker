@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.acrutchfield.inventorytracker.R;
-import com.acrutchfield.inventorytracker.data.InventoryEntry;
+import com.acrutchfield.inventorytracker.data.Inventory;
 import com.acrutchfield.inventorytracker.data.MetaData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -69,7 +69,7 @@ public class DialogAddInventory extends DialogFragment {
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialogInterface) {
-                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEUTRAL);
+                Button button = (dialog).getButton(AlertDialog.BUTTON_NEUTRAL);
                 button.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -118,10 +118,10 @@ public class DialogAddInventory extends DialogFragment {
                     DocumentSnapshot document = task.getResult();
 
                     if (document.exists()) {
-                        InventoryEntry oldEntry = document.toObject(InventoryEntry.class);
+                        Inventory oldEntry = document.toObject(Inventory.class);
                         inventoryEntryRef.update("total", oldEntry.getUpdatedTotal(total));
                     } else {
-                        InventoryEntry newEntry = new InventoryEntry(partnumber, location, spot, total);
+                        Inventory newEntry = new Inventory(partnumber, location, spot, total);
                         inventoryEntryRef.set(newEntry);
                     }
                 }

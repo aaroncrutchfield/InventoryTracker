@@ -1,9 +1,11 @@
 package com.acrutchfield.inventorytracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.acrutchfield.inventorytracker.data.MetaData;
+import com.acrutchfield.inventorytracker.ui.DetailsActivity;
 import com.acrutchfield.inventorytracker.ui.DialogAddInventory;
 import com.acrutchfield.inventorytracker.ui.MetaDataAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -18,7 +20,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MetaDataAdapter.MetaDataInteractionListener {
 
     private RecyclerView rvTotalInventory;
     private MetaDataAdapter adapter;
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 .setQuery(query, MetaData.class)
                 .build();
 
-        adapter = new MetaDataAdapter(options);
+        adapter = new MetaDataAdapter(options, this);
 
         rvTotalInventory.setLayoutManager(new LinearLayoutManager(this));
         rvTotalInventory.setAdapter(adapter);
@@ -69,5 +71,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         adapter.stopListening();
+    }
+
+    @Override
+    public void onMetaDataInteraction(String itemNumber) {
+        // Put item number into intent Extra
+        Intent detailsIntent = new Intent(this, DetailsActivity.class);
+        detailsIntent.putExtra("item_number", itemNumber);
+
+        // Start DetailsActivity
+        startActivity(detailsIntent);
     }
 }
