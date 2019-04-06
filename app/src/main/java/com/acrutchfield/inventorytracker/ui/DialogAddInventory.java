@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.acrutchfield.inventorytracker.R;
+import com.acrutchfield.inventorytracker.Utils;
 import com.acrutchfield.inventorytracker.data.Inventory;
 import com.acrutchfield.inventorytracker.data.MetaData;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -106,7 +107,7 @@ public class DialogAddInventory extends DialogFragment {
 
         // Check if item exists at location
         final DocumentReference inventoryEntryRef =
-                db.collection("INVENTORY").document(getDocumentId(spot, partnumber));
+                db.collection("INVENTORY").document(Utils.getDocumentId(location, spot, partnumber));
 
         final DocumentReference metaDataRef =
                 db.collection("META_DATA").document(partnumber);

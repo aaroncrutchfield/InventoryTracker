@@ -6,14 +6,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.acrutchfield.inventorytracker.R;
+import com.acrutchfield.inventorytracker.Utils;
 import com.acrutchfield.inventorytracker.data.Inventory;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.ObservableSnapshotArray;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 class InventoryEntryAdapter extends FirestoreRecyclerAdapter<Inventory, InventoryEntryAdapter.InventoryEntryViewHolder> {
+
+    private FirestoreRecyclerOptions<Inventory> options;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -23,11 +28,16 @@ class InventoryEntryAdapter extends FirestoreRecyclerAdapter<Inventory, Inventor
      */
     InventoryEntryAdapter(@NonNull FirestoreRecyclerOptions<Inventory> options) {
         super(options);
+        this.options = options;
     }
 
     @Override
     protected void onBindViewHolder(@NonNull InventoryEntryViewHolder inventoryEntryViewHolder, int i, @NonNull Inventory inventory) {
-        inventoryEntryViewHolder.bind(inventory);
+        ObservableSnapshotArray<Inventory> snapshots = options.getSnapshots();
+        DocumentSnapshot snapshot = snapshots.getSnapshot(i);
+        String id = snapshot.getId();
+
+        inventoryEntryViewHolder.bind(inventory, id);
     }
 
     @NonNull
@@ -53,10 +63,17 @@ class InventoryEntryAdapter extends FirestoreRecyclerAdapter<Inventory, Inventor
             tvTotal = itemView.findViewById(R.id.tv_total);
         }
 
-        void bind(Inventory inventory) {
-            tvLocation.setText(inventory.getLocation());
-            tvSpot.setText(inventory.getSpot());
-            tvTotal.setText(String.valueOf(inventory.getTotal()));
+        void bind(Inventory inventory, String id) {
+            String spot = inventory.getSpot();
+            String itemNumber = inventory.getItem();
+            String location = inventory.getLocation();
+            int total = inventory.getTotal();
+
+            tvLocation.setText(location);
+            tvSpot.setText(spot);
+            tvTotal.setText(String.valueOf(total));
+            itemView.setTag(R.id.tv_spot, Utils.getDocumentId(location, spot, itemNumber));
+            itemView.setTag(R.id.tv_total, total);
         }
     }
 }

@@ -11,8 +11,9 @@ public class MetaData {
     private String standardContainer;
     private int standardPack;
     private String suffix;
+    private String imageUrl;
 
-    public MetaData(List<String> customers, String defaultLocation, int inventoryTotal, String itemNumber, String revLevel, String standardContainer, int standardPack, String suffix) {
+    public MetaData(List<String> customers, String defaultLocation, int inventoryTotal, String itemNumber, String revLevel, String standardContainer, int standardPack, String suffix, String imageUrl) {
         this.customers = customers;
         this.defaultLocation = defaultLocation;
         this.inventoryTotal = inventoryTotal;
@@ -21,6 +22,7 @@ public class MetaData {
         this.standardContainer = standardContainer;
         this.standardPack = standardPack;
         this.suffix = suffix;
+        this.imageUrl = imageUrl;
     }
 
     public MetaData() {
@@ -113,5 +115,13 @@ public class MetaData {
     public int getUpdatedTotal(int quantitiyToAdd) {
         inventoryTotal += quantitiyToAdd;
         return inventoryTotal;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
